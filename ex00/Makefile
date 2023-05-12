@@ -6,7 +6,7 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/05/12 23:26:28 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/12 23:29:56 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ push:	clean
 	@git commit -m "$(MSG)"
 ifeq ($(REP), 42)
 	@git rm -f --cached *.pdf *.md
-	@git push wolfburg master
+	@git push wolfsburg master
 	@echo $(COL_G)Pushed to repo: $(REP)$(COL_D)
 else 
 	@git push mexes main
