@@ -6,13 +6,15 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/03/05 00:46:15 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/12 23:26:28 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS:= main.cpp 
 
 OBJS:= $(SRCS:.c=.o)
+MSG = 
+REP =
 
 NAME = find
 
@@ -20,6 +22,11 @@ CC = g++
 STD_CPP = c++98
 CFLAGS = -Werror -Wall -Wextra -g -std=$(STD_CPP)
 INCLUDES = -I./
+
+#=== COLORS ====
+COL_Y = "\033[1;32m"
+COL_G = "\033[1;33m"
+COL_D = "\033[0m"
 
 NAME : all
 all : $(NAME)
@@ -49,4 +56,21 @@ clean: fclean
 # recompile everything
 re: clean all
 
-.PHONY : all fclean clean re 
+#=================== GIT ===============================
+push:	clean
+	$(info Pushing to Git Repository)
+	@cd ../
+	@git add .
+	@git ls-files; git status
+	@git commit -m "$(MSG)"
+ifeq ($(REP), 42)
+	@git rm -f --cached *.pdf *.md
+	@git push wolfburg master
+	@echo $(COL_G)Pushed to repo: $(REP)$(COL_D)
+else 
+	@git push mexes main
+	@echo $(COL_G)Pushed to repo: mexes$(COL_D)
+endif
+	@echo $(COL_G)$(MSG)$(COL_D)
+
+.PHONY : all fclean clean re push
