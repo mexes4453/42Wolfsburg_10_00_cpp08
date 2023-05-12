@@ -6,7 +6,7 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/05/12 23:34:32 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/12 23:35:16 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,7 @@ re: clean all
 #=================== GIT ===============================
 push:	clean
 	$(info Pushing to Git Repository)
-	@cd ../
-	@git add .
+	@git add ../*
 	@git ls-files; git status
 	@git commit -m "$(MSG)"
 ifeq ($(REP), 42)
