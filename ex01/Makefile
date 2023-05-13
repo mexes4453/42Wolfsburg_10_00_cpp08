@@ -6,17 +6,17 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/05/13 10:38:14 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/13 13:29:17 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS:= main.cpp 
+SRCS:= main.cpp  Span.cpp
 
 OBJS:= $(SRCS:.c=.o)
 MSG = 
 REP =
 
-NAME = easyfind
+NAME = span
 
 CC = g++
 STD_CPP = c++98
