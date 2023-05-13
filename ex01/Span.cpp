@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 12:27:26 by cudoh             #+#    #+#             */
-/*   Updated: 2023/05/13 22:57:35 by cudoh            ###   ########.fr       */
+/*   Updated: 2023/05/13 23:05:39 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ Span::Span( Span const &obj )
 Span    &Span::operator=( Span const &rhs )
 {
     this->nbrSize = rhs.nbrSize;
+    this->nbrs = rhs.nbrs;
     //memcpy(this->nbrs, &(rhs.nbrs), sizeof(rhs.nbrs));
-    std::swap(this->nbrs, rhs.nbrs);
+    //std::swap(this->nbrs, rhs.nbrs);
     return (*this);
 }
 
