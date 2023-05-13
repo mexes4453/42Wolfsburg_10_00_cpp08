@@ -6,16 +6,31 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 12:27:26 by cudoh             #+#    #+#             */
-/*   Updated: 2023/05/13 15:26:32 by cudoh            ###   ########.fr       */
+/*   Updated: 2023/05/13 22:57:35 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
+Span::Span(void) : nbrSize(0), nbrs(NULL)
+{}
 
 Span::Span(unsigned int N) : nbrSize(N), nbrs(NULL)
 {
     nbrs = new std::vector <int>;
+}
+
+Span::Span( Span const &obj )
+{
+    *this = obj;
+}
+
+Span    &Span::operator=( Span const &rhs )
+{
+    this->nbrSize = rhs.nbrSize;
+    //memcpy(this->nbrs, &(rhs.nbrs), sizeof(rhs.nbrs));
+    std::swap(this->nbrs, rhs.nbrs);
+    return (*this);
 }
 
 Span::~Span(void)
@@ -30,7 +45,7 @@ Span::~Span(void)
 }
 
 
-void    Span::addNumber(int nbr)
+void    Span::addNumber(int const nbr)
 {
     try
     {
@@ -43,10 +58,7 @@ void    Span::addNumber(int nbr)
             throw std::runtime_error(ERR_MSG_FULL);
         }
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    EXCEPTION_HANDLER();
 }
 
 
@@ -60,7 +72,9 @@ int Span::shortestSpan(void)
     int span_range = 0;
     try
     {
-        if (nbrSize >= 2)
+        if (nbrSize == 0)
+            throw std::runtime_error(ERR_MSG_SIZE_LIMIT);
+        if (nbrs->size() >= 2 )
         {
             std::sort(nbrs->begin(), nbrs->end());
             span_range = nbrs->at(1) - nbrs->front();
@@ -68,10 +82,7 @@ int Span::shortestSpan(void)
         else
             throw std::runtime_error(ERR_MSG_NO_SPAN);
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    EXCEPTION_HANDLER();
     return (span_range);
 }
 
@@ -82,7 +93,9 @@ int Span::longestSpan(void)
     int span_range = 0;
     try
     {
-        if (nbrSize >= 2)
+        if (nbrSize == 0)
+            throw std::runtime_error(ERR_MSG_SIZE_LIMIT);
+        if (nbrs->size() >= 2)
         {
             std::sort(nbrs->begin(), nbrs->end());
             span_range = nbrs->back() - nbrs->front();
@@ -90,9 +103,28 @@ int Span::longestSpan(void)
         else
             throw std::runtime_error(ERR_MSG_NO_SPAN);
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+    EXCEPTION_HANDLER();
     return (span_range);
+}
+
+void Span::fillSpan(VEC_INT_IT begin, VEC_INT_IT end)
+{
+    try
+    {
+        if (nbrSize == 0)
+            throw std::runtime_error(ERR_MSG_SIZE_LIMIT);
+        else if (begin == end)
+        {
+            throw std::runtime_error(ERR_MSG_EMPTY_VEC);
+        }
+        else
+        {
+            while (begin != end)
+            {
+                addNumber(*begin);
+                begin++;
+            }
+        }
+    }
+   EXCEPTION_HANDLER();
 }

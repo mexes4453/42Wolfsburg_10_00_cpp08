@@ -1,0 +1,1 @@
+_sequence(MIN_NBR_INT, 2);

@@ -6,7 +6,7 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/05/13 10:38:14 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/13 19:42:51 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ clean: fclean
 # recompile everything
 re: clean all
 
-#=================== GIT ===============================
+#=================== GIT ========================
 push:	clean
 	$(info Pushing to Git Repository)
 	@git add ../*
