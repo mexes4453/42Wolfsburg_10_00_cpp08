@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:51:41 by cudoh             #+#    #+#             */
-/*   Updated: 2023/05/13 22:49:32 by cudoh            ###   ########.fr       */
+/*   Updated: 2023/05/15 19:13:49 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,15 @@ class Span
         Span(Span const &obj);
         Span &operator=(Span const &rhs);
         ~Span(void);
-        void            addNumber(int const nbr);
-        int             shortestSpan(void);
-        int             longestSpan(void);
-        void            fillSpan(VEC_INT_IT begin, VEC_INT_IT end);
-        unsigned int    getSize(void) const;
-
+        void                addNumber(int const nbr);
+        int                 shortestSpan(void);
+        int                 longestSpan(void);
+        void                fillSpan(VEC_INT_IT begin, VEC_INT_IT end);
+        unsigned int        getSize(void) const;
+        std::vector<int>    *getSpanPtr(void) const;
 
 };
+
+std::ostream    &operator<<(std::ostream &o, Span const &s);
 
 #endif // SPAN_HPP
