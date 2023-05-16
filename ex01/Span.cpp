@@ -6,7 +6,7 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 12:27:26 by cudoh             #+#    #+#             */
-/*   Updated: 2023/05/13 23:05:39 by cudoh            ###   ########.fr       */
+/*   Updated: 2023/05/14 08:35:29by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ Span::Span( Span const &obj )
 Span    &Span::operator=( Span const &rhs )
 {
     this->nbrSize = rhs.nbrSize;
-    this->nbrs = rhs.nbrs;
-    //memcpy(this->nbrs, &(rhs.nbrs), sizeof(rhs.nbrs));
-    //std::swap(this->nbrs, rhs.nbrs);
+    this->nbrs = new std::vector<int>(rhs.nbrs->begin(), rhs.nbrs->end());
     return (*this);
 }
 
@@ -71,14 +69,23 @@ unsigned int    Span::getSize(void) const
 int Span::shortestSpan(void)
 {
     int span_range = 0;
+    std::vector<int>    tmp_v;
+    VEC_INT_IT head, tail;
     try
     {
         if (nbrSize == 0)
-            throw std::runtime_error(ERR_MSG_SIZE_LIMIT);
+            throw std::runtime_error(ERR_MSG_NO_SPAN);
         if (nbrs->size() >= 2 )
         {
             std::sort(nbrs->begin(), nbrs->end());
-            span_range = nbrs->at(1) - nbrs->front();
+            head = nbrs->begin();
+            tail = nbrs->end();
+            while (head + 1 != tail)
+            {
+                tmp_v.push_back(*(head + 1) - *head);
+                head++;
+            }
+            span_range = *(std::min_element(tmp_v.begin(), tmp_v.end()));
         }
         else
             throw std::runtime_error(ERR_MSG_NO_SPAN);
@@ -95,7 +102,7 @@ int Span::longestSpan(void)
     try
     {
         if (nbrSize == 0)
-            throw std::runtime_error(ERR_MSG_SIZE_LIMIT);
+            throw std::runtime_error(ERR_MSG_NO_SPAN);
         if (nbrs->size() >= 2)
         {
             std::sort(nbrs->begin(), nbrs->end());
@@ -128,4 +135,27 @@ void Span::fillSpan(VEC_INT_IT begin, VEC_INT_IT end)
         }
     }
    EXCEPTION_HANDLER();
+}
+
+
+std::vector<int>    *Span::getSpanPtr(void) const
+{
+    return (nbrs);
+}
+
+
+std::ostream    &operator<<(std::ostream &o, Span const &s)
+{
+    std::vector<int>::iterator  it;
+    if (s.getSize() > 0  && s.getSpanPtr()->size() > 0)
+    {
+
+        for (it = s.getSpanPtr()->begin(); it != s.getSpanPtr()->end(); it++)
+        {
+            o << *it << " ";
+        }
+        o << ENDL;
+
+    }
+    return (o);
 }
