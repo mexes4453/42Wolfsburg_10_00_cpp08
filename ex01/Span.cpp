@@ -147,15 +147,19 @@ std::vector<int>    *Span::getSpanPtr(void) const
 std::ostream    &operator<<(std::ostream &o, Span const &s)
 {
     std::vector<int>::iterator  it;
-    if (s.getSize() > 0  && s.getSpanPtr()->size() > 0)
+    std::vector<int>    *spanVecPtr = s.getSpanPtr();
+
+    if (spanVecPtr != NULL)
     {
-
-        for (it = s.getSpanPtr()->begin(); it != s.getSpanPtr()->end(); it++)
+        if (s.getSize() > 0 && spanVecPtr->size() > 0)
         {
-            o << *it << " ";
-        }
-        o << ENDL;
 
+            for (it = spanVecPtr->begin(); it != spanVecPtr->end(); it++)
+            {
+                o << *it << " ";
+            }
+            o << ENDL;
+        }
     }
     return (o);
 }
