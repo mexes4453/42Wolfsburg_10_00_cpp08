@@ -13,10 +13,7 @@
 
 #ifndef MUTANTSTACK_HPP
 # define MUTANTSTACK_HPP
-
 # include <iostream>
-# include <exception>
-# include <stdexcept>
 # include <iterator>
 # include <stack>
 # include <deque>
@@ -37,29 +34,46 @@ template <typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>
 {
     public:
-        typedef std::stack<T, Container> stack;
-        typedef typename stack::container_type  container;
-        typedef typename container::iterator iterator;
-        typedef typename container::const_iterator c_iterator;
-        typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
-        typedef std::reverse_iterator<iterator>		reverse_iterator;
+        typedef std::stack<T, Container>                    stack;
+        typedef typename stack::container_type              container;
+        typedef typename container::iterator                iterator;
+        typedef typename container::reverse_iterator        reverse_iterator;
+        typedef typename container::const_iterator          const_iterator;
+        typedef typename container::const_reverse_iterator  const_reverse_iterator;
 
-
-        MutantStack(): stack(){}
+        MutantStack(void): stack(){}
         MutantStack(stack const &other) : stack(other) {}
-        virtual ~MutantStack(){}
-        MutantStack<T, Container> &operator=(stack const &rhs)
+        ~MutantStack(void){}
+        MutantStack &operator=(MutantStack const &rhs)
         {
-            if (this != &rhs)
-            {
-                *this = rhs;
-            }
+            stack::operator=(rhs);
             return (*this);
         }
 
-        iterator    begin() {return stack::c.begin();}
-        iterator    end() {return stack::c.end();}
+        iterator                begin(void) {return stack::c.begin();}
+        iterator                end(void) {return stack::c.end();}
+        reverse_iterator        rbegin(void) { return (stack::c.rbegin()); }
+        reverse_iterator        rend(void) { return (stack::c.rend()); }
+        const_iterator          begin(void) const { return (stack::c.begin()); }
+        const_iterator          end(void) const { return (stack::c.end()); }
+        const_reverse_iterator  rbegin(void) const { return (stack::c.rbegin()); }
+        const_reverse_iterator  rend(void) const { return (stack::c.rend()); }
+
 };
 
+template <typename T, typename C >
+std::ostream &operator<<(std::ostream &o, MutantStack<T, C> const &mstack)
+{
+
+        typename MutantStack<T, C>::const_iterator it = mstack.begin();
+        typename MutantStack<T, C>::const_iterator ite = mstack.end();
+        o << " - SIZE: " << mstack.size() << " : ";
+        while (it != ite)
+        {
+            o << *it << " ";
+            ++it;
+        }
+        return (o);
+}
 
 #endif //MUTANTSTACK_HPP
