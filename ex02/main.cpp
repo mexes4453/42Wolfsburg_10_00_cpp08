@@ -6,128 +6,66 @@
 /*   By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 20:51:45 by cudoh             #+#    #+#             */
-/*   Updated: 2023/05/15 19:06:52 by cudoh            ###   ########.fr       */
+/*   Updated: 2023/05/18 05:46:32 by cudoh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "Span.hpp"
-# include <cstdlib>
-# include <ctime>
-
-int    genRandNbr(void);
+# include "MutantStack.hpp"
+# include <vector>
 
 int main(void)
 {
-    SHOW_HEADER(1. TEST : SPAN === init: N = 3)
+    COUT << ENDL;
+    SHOW_HEADER(1. TEST
+                : MUTANT STACK INIT)
     {
-        Span numbers(3);
-        numbers.addNumber(1);
-        numbers.addNumber(2);
-        numbers.addNumber(3);
-        numbers.addNumber(4);
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
+        std::deque<int> mydeque(3, 100);   // deque with 3 elements
+        std::vector<int> myvector(2, 200); // vector with 2 elements
+
+        std::stack<int> first;           // empty stack
+        std::stack<int> second(mydeque); // stack initialized to copy of deque
+
+        std::stack<int, std::vector<int> > third; // empty stack using vector
+        std::stack<int, std::vector<int> > fourth(myvector);
+
+        std::cout << "size of first: " << first.size() << '\n';
+        std::cout << "size of second: " << second.size() << '\n';
+        std::cout << "size of third: " << third.size() << '\n';
+        std::cout << "size of fourth: " << fourth.size() << '\n';
+        MutantStack<int> ms1(first);
+        MutantStack<int> ms2(second);
+        MutantStack<int, std::vector<int> > ms3(third);
+        MutantStack<int, std::vector<int> > ms4(fourth);
+        MutantStack<int> ms5(ms1);
+        MutantStack<int> ms6 = ms2;
+
     }
 
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(2. TEST : SPAN === init: N = 0)
+    COUT << ENDL;
+    SHOW_HEADER(2. TEST
+                : MUTANT STACK - SUBJECT FILE)
     {
-        Span numbers(0);
-        numbers.addNumber(4);
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(3. TEST : SPAN === init: N = 1)
-    {
-        Span numbers(1);
-        numbers.addNumber(4);
-        numbers.addNumber(6);
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(4. TEST : EMPTY SPAN FILL UP => init: with 10000 sized vector)
-    {   
-        std::vector<int>    _sequence(MIN_NBR_INT, 2);
-        Span numbers;
-        numbers.fillSpan(_sequence.begin(), _sequence.end());
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-    
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(5. TEST : EMPTY SPAN FILL UP => init: with empty sized vector)
-    {   
-        std::vector<int>    _sequence;
-        Span numbers;
-        numbers.fillSpan(_sequence.begin(), _sequence.end());
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(6. TEST : 10000 SPAN FILL UP => init: with empty sized vector)
-    {   
-        std::vector<int>     _sequence;
-        Span numbers(MIN_NBR_INT);
-        numbers.fillSpan(_sequence.begin(), _sequence.end());
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(7. TEST : 10000 SPAN FILL UP => init: with 10000 sized vector)
-    {   
-        std::vector<int>     _sequence(MIN_NBR_INT, 2);
-        Span numbers(MIN_NBR_INT);
-        numbers.fillSpan(_sequence.begin(), _sequence.end());
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(8. TEST : 10000 SPAN FILL UP => init: with 10000 sized vector - random nbrs)
-    {
-        std::vector<int>    nbrFiller(MIN_NBR_INT, 0);
-        Span numbers(MIN_NBR_INT);
-        std::srand(unsigned (std::time(0)));
-        std::generate(nbrFiller.begin(), nbrFiller.end(), genRandNbr);
-        numbers.fillSpan(nbrFiller.begin(), nbrFiller.end());
-        COUT << "SIZE: " << numbers.getSize() << ENDL;
-        COUT << "SHORTEST : " << numbers.shortestSpan() << ENDL;
-        COUT << "LONGEST  : " << numbers.longestSpan() << ENDL;
-    }
-
-    COUT << ENDL << ENDL;
-    SHOW_HEADER(10. TEST : SUBJECT FILE TEST CASE)
-    {
-        Span sp = Span(5);
-        sp.addNumber(6);
-        sp.addNumber(3);
-        sp.addNumber(17);
-        sp.addNumber(9);
-        sp.addNumber(11);
-        COUT << sp << ENDL;
-        std::cout << sp.shortestSpan() << std::endl;
-        COUT << sp << ENDL;
-        std::cout << sp.longestSpan() << std::endl;
+        MutantStack<int> mstack;
+        mstack.push(5);
+        mstack.push(17);
+        std::cout << mstack.top() << std::endl;
+        mstack.pop();
+        std::cout << mstack.size() << std::endl;
+        mstack.push(3);
+        mstack.push(5);
+        mstack.push(737);
+        //[...]
+        mstack.push(0);
+        MutantStack<int>::iterator it = mstack.begin();
+        MutantStack<int>::iterator ite = mstack.end();
+        ++it;
+        --it;
+        while (it != ite)
+        {
+            std::cout << *it << std::endl;
+            ++it;
+        }
+        std::stack<int> s(mstack);
     }
     return (0);
-}
-
-
-int    genRandNbr(void)
-{
-    return (std::rand() % 100);
 }
