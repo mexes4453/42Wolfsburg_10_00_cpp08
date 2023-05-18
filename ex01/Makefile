@@ -6,11 +6,7 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/05/15 19:17:12 by cudoh            ###   ########.fr        #
-=======
-#    Updated: 2023/05/13 23:17:43 by cudoh            ###   ########.fr        #
->>>>>>> mexes
+#    Updated: 2023/05/18 23:10:06 by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +57,7 @@ clean: fclean
 re: clean all
 
 #=================== GIT ===============================
+define comments
 push:	clean
 	$(info Pushing to Git Repository)
 	@git add ../*
@@ -77,4 +74,5 @@ else
 endif
 	@echo $(COL_G)$(MSG)$(COL_D)
 
+endef # comments
 .PHONY : all fclean clean re push

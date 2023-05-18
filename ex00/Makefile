@@ -6,7 +6,7 @@
 #    By: cudoh <cudoh@student.42wolfsburg.de>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/30 15:08:09 by cudoh             #+#    #+#              #
-#    Updated: 2023/05/18 23:03:13 by cudoh            ###   ########.fr        #
+#    Updated: 2023/05/18 23:01:11by cudoh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ clean: fclean
 re: clean all
 
 #=================== GIT ========================
-ifeq ("x","y")
+define comments
 push:	clean
 	$(info Pushing to Git Repository)
 	@git add ../*
@@ -73,5 +73,5 @@ else
 endif
 	@echo $(COL_G)$(MSG)$(COL_D)
 
-endif
+endef # end of comments
 .PHONY : all fclean clean re push
